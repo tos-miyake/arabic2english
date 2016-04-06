@@ -1,0 +1,4 @@
+.bundle
+vendor/bundle
+*.swp
+.DS_Store
