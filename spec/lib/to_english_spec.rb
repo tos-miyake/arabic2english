@@ -51,4 +51,17 @@ describe ToEnglish do
     expect(111_001_100.to_english).to \
       eq('one hundred and eleven million, one thousand, one hundred')
   end
+
+  it do
+    expect(111_111_111_111.to_english).to \
+      eq( 'one hundred and eleven billion, one hundred and eleven million, '\
+          'one hundred and eleven thousand, one hundred and eleven')
+  end
+  it do
+    expect(111_111_111_111_111.to_english).to \
+      eq( 'one hundred and eleven trillion, one hundred and eleven billion, '\
+          'one hundred and eleven million, one hundred and eleven thousand, '\
+          'one hundred and eleven')
+  end
+
 end
