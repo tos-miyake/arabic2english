@@ -9,26 +9,8 @@ module ToEnglish
       under100_to_english
     when 100..999
       under1_000_to_english self
-    when 1_000
-      'one thousand'
-    when 1_003
-      'one thousand and three'
-    when 1_015
-      'one thousand and fifteen'
-    when 1_040
-      'one thousand and forty'
-    when 1_100
-      'one thousand one hundred'
-    when 1_123
-      'one thousand one hundred and twenty-three'
-    when 10_123
-      'ten thousand one hundred and twenty-three'
-    when 100_123
-      'one hundred thousand one hundred and twenty-three'
-    when 120_123
-      'one hundred and twenty thousand one hundred and twenty-three'
-    when 113_123
-      'one hundred and thirteen thousand one hundred and twenty-three'
+    when 1000..999_999
+      under1_000_000_to_english self
     end
   end
 
@@ -54,6 +36,21 @@ module ToEnglish
       "#{_100digit_english} hundred and #{under_100_english}"
     else
       "#{_100digit_english} hundred"
+    end
+  end
+
+  def under1_000_000_to_english num
+    _1000digit_english = (num / 1000).to_english
+    under_1000_english = nil
+    unless (under1000 = (num % 1000)).zero?
+     under_1000_english =  under1000.to_english
+    end
+    if under_1000_english && (under1000/100).zero?
+      "#{_1000digit_english} thousand and #{under_1000_english}"
+    elsif under_1000_english
+      "#{_1000digit_english} thousand #{under_1000_english}"
+    else
+      "#{_1000digit_english} thousand"
     end
   end
 end
