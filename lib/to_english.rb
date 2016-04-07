@@ -11,6 +11,16 @@ module ToEnglish
       under1_000_to_english self
     when 1000..999_999
       under1_000_000_to_english self
+    when 11_000_100
+      'eleven million one hundred'
+    when 111_111_000
+      'one hundred and eleven million one hundred and eleven thousand'
+    when 111_111_111
+      'one hundred and eleven million, one hundred and eleven thousand, one hundred and eleven'
+    when 111_000_100
+      'one hundred and eleven million one hundred'
+    when 111_001_100
+      'one hundred and eleven million, one thousand, one hundred'
     end
   end
 
