@@ -1,7 +1,20 @@
 require 'to_english/constant'
 
 module ToEnglish
+
   def to_english
+    result = to_english_recursively
+    if to_human?
+      %w(million thousand).each do |replaceword|
+        result.gsub!(/#{replaceword}/, "#{replaceword},")
+      end
+      result
+    else
+      result
+    end
+  end
+
+  def to_english_recursively
     case self
     when 0..19
       CONVERT_UNDER_20[self]
@@ -11,16 +24,8 @@ module ToEnglish
       under1_000_to_english self
     when 1000..999_999
       under1_000_000_to_english self
-    when 11_000_100
-      'eleven million one hundred'
-    when 111_111_000
-      'one hundred and eleven million one hundred and eleven thousand'
-    when 111_111_111
-      'one hundred and eleven million, one hundred and eleven thousand, one hundred and eleven'
-    when 111_000_100
-      'one hundred and eleven million one hundred'
-    when 111_001_100
-      'one hundred and eleven million, one thousand, one hundred'
+    when 1_000_000..999_999_999
+      under_one_billion_to_english self
     end
   end
 
@@ -40,7 +45,7 @@ module ToEnglish
     _100digit_english = CONVERT_UNDER_20[num / 100]
     under_100_english = nil
     unless (under100 = (num % 100)).zero?
-     under_100_english =  under100.to_english
+     under_100_english =  under100.to_english_recursively
     end
     if under_100_english
       "#{_100digit_english} hundred and #{under_100_english}"
@@ -50,10 +55,10 @@ module ToEnglish
   end
 
   def under1_000_000_to_english num
-    _1000digit_english = (num / 1000).to_english
+    _1000digit_english = (num / 1000).to_english_recursively
     under_1000_english = nil
     unless (under1000 = (num % 1000)).zero?
-     under_1000_english =  under1000.to_english
+     under_1000_english =  under1000.to_english_recursively
     end
     if under_1000_english && (under1000/100).zero?
       "#{_1000digit_english} thousand and #{under_1000_english}"
@@ -62,6 +67,29 @@ module ToEnglish
     else
       "#{_1000digit_english} thousand"
     end
+  end
+
+  def under_one_billion_to_english num
+    million_english = (num / 1_000_000).to_english_recursively
+    under_million_english = nil
+    unless (under_million = (num % 1_000_000)).zero?
+     under_million_english =  under_million.to_english_recursively
+    end
+    if under_million_english
+      "#{million_english} million #{under_million_english}"
+    else
+      "#{million_english} million"
+    end
+  end
+
+  def to_human?
+    count=0
+    num = self
+    until num == 0
+      count+=1 unless (num % 1000).zero?
+      num /= 1000
+    end
+    count > 2
   end
 end
 
