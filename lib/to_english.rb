@@ -24,15 +24,8 @@ module ToEnglish
       under1_000_to_english self
     when 1000..999_999
       under1_000_000_to_english self
-    when 1_000_000..999_999_999
-      under_one_billion_to_english self
-    when 111_111_111_111
-      'one hundred and eleven billion one hundred and eleven million '\
-      'one hundred and eleven thousand one hundred and eleven'
-    when 111_111_111_111_111
-      'one hundred and eleven trillion one hundred and eleven billion '\
-      'one hundred and eleven million one hundred and eleven thousand '\
-      'one hundred and eleven'
+    when 1_000_000..999_999_999_999_999
+      big_number_to_english self
     end
   end
 
@@ -76,16 +69,18 @@ module ToEnglish
     end
   end
 
-  def under_one_billion_to_english num
-    million_english = (num / 1_000_000).to_english_recursively
+  def big_number_to_english num
+    index = big_number_index(num)
+    big_number_prefix = CONVERT_BIG_DIGIT[index]
+    million_english = (num / 1000**index).to_english_recursively
     under_million_english = nil
-    unless (under_million = (num % 1_000_000)).zero?
+    unless (under_million = (num % 1000**index)).zero?
      under_million_english =  under_million.to_english_recursively
     end
     if under_million_english
-      "#{million_english} million #{under_million_english}"
+      "#{million_english} #{big_number_prefix} #{under_million_english}"
     else
-      "#{million_english} million"
+      "#{million_english} #{big_number_prefix}"
     end
   end
 
@@ -98,6 +93,16 @@ module ToEnglish
     end
     count > 2
   end
+
+  def big_number_index big_num
+    index=0
+    num = big_num
+    until num == 0
+      index+=1 unless (num /= 1000).zero?
+    end
+    index
+  end
+
 end
 
 class Integer

@@ -15,4 +15,11 @@ module ToEnglish
         hash[key] = value
       end
     end.freeze
+
+  CONVERT_BIG_DIGIT =
+    {}.tap do |hash|
+      %w[ million billion trillion ].each.with_index(2) do |value, key|
+        hash[key] = value
+      end
+    end.freeze
 end
