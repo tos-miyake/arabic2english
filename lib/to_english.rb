@@ -9,6 +9,26 @@ module ToEnglish
       under100_to_english
     when 100..999
       under1_000_to_english self
+    when 1_000
+      'one thousand'
+    when 1_003
+      'one thousand and three'
+    when 1_015
+      'one thousand and fifteen'
+    when 1_040
+      'one thousand and forty'
+    when 1_100
+      'one thousand one hundred'
+    when 1_123
+      'one thousand one hundred and twenty-three'
+    when 10_123
+      'ten thousand one hundred and twenty-three'
+    when 100_123
+      'one hundred thousand one hundred and twenty-three'
+    when 120_123
+      'one hundred and twenty thousand one hundred and twenty-three'
+    when 113_123
+      'one hundred and thirteen thousand one hundred and twenty-three'
     end
   end
 
