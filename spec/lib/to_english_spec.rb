@@ -31,4 +31,24 @@ describe ToEnglish do
   it { expect(100_123.to_english).to eq('one hundred thousand one hundred and twenty-three') }
   it { expect(120_123.to_english).to eq('one hundred and twenty thousand one hundred and twenty-three') }
   it { expect(113_123.to_english).to eq('one hundred and thirteen thousand one hundred and twenty-three') }
+
+  it do expect(11_000_100.to_english).to \
+    eq('eleven million one hundred')
+  end
+  it do
+    expect(111_111_000.to_english).to \
+      eq('one hundred and eleven million one hundred and eleven thousand')
+  end
+  it do
+    expect(111_111_111.to_english).to \
+      eq('one hundred and eleven million, one hundred and eleven thousand, one hundred and eleven')
+  end
+  it do
+    expect(111_000_100.to_english).to \
+      eq('one hundred and eleven million one hundred')
+  end
+  it do
+    expect(111_001_100.to_english).to \
+      eq('one hundred and eleven million, one thousand, one hundred')
+  end
 end
