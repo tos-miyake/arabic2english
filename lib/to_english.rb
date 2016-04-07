@@ -5,8 +5,8 @@ module ToEnglish
   def to_english
     return 'sorry, I can`t count. too big.' if 999_999_999_999_999 < self
     result = to_english_recursively
-    if to_human?
-      %w(trillion billion million thousand).each do |replaceword|
+    if to_long?
+      [CONVERT_BIG_DIGIT.values, 'thousand'].flatten.each do |replaceword|
         result.gsub!(/#{replaceword}/, "#{replaceword},")
       end
       result
@@ -85,7 +85,7 @@ module ToEnglish
     end
   end
 
-  def to_human?
+  def to_long?
     count=0
     num = self
     until num == 0
