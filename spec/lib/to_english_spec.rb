@@ -64,4 +64,10 @@ describe ToEnglish do
           'one hundred and eleven')
   end
 
+
+  it do
+    expect(1_000_000_000_000_000.to_english).to \
+      eq( 'sorry, I can`t count. too big.')
+  end
+
 end
