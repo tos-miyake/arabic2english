@@ -3,6 +3,7 @@ require 'to_english/constant'
 module ToEnglish
 
   def to_english
+    return 'sorry, I can`t count. too big.' if 999_999_999_999_999 < self
     result = to_english_recursively
     if to_human?
       %w(trillion billion million thousand).each do |replaceword|
