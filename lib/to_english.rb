@@ -5,14 +5,20 @@ module ToEnglish
     case self
     when 0..19
       CONVERT_UNDER_20[self]
-    when 20
-      'twenty'
-    when 21
-      'twenty-one'
-    when 45
-      'forty-five'
-    when 80
-      'eighty'
+    when 20..99
+      under100_to_english
+    end
+  end
+
+  private
+
+  def under100_to_english
+    _1digit = self % 10
+    _10digit = self / 10
+    if _1digit.zero?
+      CONVERT_10_DIGIT[_10digit]
+    else
+      "#{CONVERT_10_DIGIT[_10digit]}-#{CONVERT_UNDER_20[_1digit]}"
     end
   end
 end
