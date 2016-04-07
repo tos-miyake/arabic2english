@@ -3,6 +3,7 @@ require_relative 'to_english/constant'
 module ToEnglish
 
   def to_english
+    return if self.negative?
     return 'sorry, I can`t count. too big.' if 999_999_999_999_999 < self
     result = to_english_recursively
     if to_long?
