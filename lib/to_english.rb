@@ -43,7 +43,7 @@ module ToEnglish
   end
 
   def under1_000_to_english num
-    _100digit_english = CONVERT_UNDER_20[num / 100]
+    _100digit_english = (num / 100).to_english_recursively
     under_100_english = nil
     unless (under100 = (num % 100)).zero?
      under_100_english =  under100.to_english_recursively
