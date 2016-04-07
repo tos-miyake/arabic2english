@@ -7,6 +7,22 @@ module ToEnglish
       CONVERT_UNDER_20[self]
     when 20..99
       under100_to_english
+    when 100
+      'one hundred'
+    when 119
+      'one hundred and nineteen'
+    when 221
+      'two hundred and twenty-one'
+    when 545
+      'five hundred and forty-five'
+    when 800
+      'eight hundred'
+    when 901
+      'nine hundred and one'
+    when 980
+      'nine hundred and eighty'
+    when 999
+      'nine hundred and ninety-nine'
     end
   end
 
