@@ -5,6 +5,7 @@ module ToEnglish
   def to_english
     sign = self.negative? ? 'minus ' : ''
     return 'sorry, I can`t count. too big.' if 999_999_999_999_999 < self
+    return 'sorry, I can`t count. too small.' if - 999_999_999_999_999 > self
     result = self.abs.to_english_recursively
     if to_long?
       [CONVERT_BIG_DIGIT.values, 'thousand'].flatten.each do |replaceword|
