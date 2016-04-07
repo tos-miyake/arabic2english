@@ -71,4 +71,9 @@ describe ToEnglish do
   end
 
   it { expect(-1.to_english).to eq('minus one') }
+
+  it do
+    expect(-1_000_000_000_000_000.to_english).to \
+      eq('sorry, I can`t count. too small.')
+  end
 end
