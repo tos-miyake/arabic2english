@@ -3,17 +3,15 @@ require_relative 'to_english/constant'
 module ToEnglish
 
   def to_english
-    return 'minus one' if self.negative?
+    sign = self.negative? ? 'minus ' : ''
     return 'sorry, I can`t count. too big.' if 999_999_999_999_999 < self
-    result = to_english_recursively
+    result = self.abs.to_english_recursively
     if to_long?
       [CONVERT_BIG_DIGIT.values, 'thousand'].flatten.each do |replaceword|
         result.gsub!(/#{replaceword}/, "#{replaceword},")
       end
-      result
-    else
-      result
     end
+    "#{sign}#{result}"
   end
 
   def to_english_recursively
@@ -88,7 +86,7 @@ module ToEnglish
 
   def to_long?
     count=0
-    num = self
+    num = self.abs
     until num == 0
       count+=1 unless (num % 1000).zero?
       num /= 1000
