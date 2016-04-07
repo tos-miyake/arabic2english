@@ -1,13 +1,8 @@
+require 'to_english/constant'
+
 module ToEnglish
   def to_english
-    case self
-    when 1
-      'one'
-    when 3
-      'three'
-    when 11
-      'eleven'
-    end
+    CONVERT_UNDER_20[self]
   end
 end
 
