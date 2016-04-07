@@ -32,8 +32,9 @@ describe ToEnglish do
   it { expect(120_123.to_english).to eq('one hundred and twenty thousand one hundred and twenty-three') }
   it { expect(113_123.to_english).to eq('one hundred and thirteen thousand one hundred and twenty-three') }
 
-  it do expect(11_000_100.to_english).to \
-    eq('eleven million one hundred')
+  it do
+    expect(11_000_100.to_english).to \
+      eq('eleven million one hundred')
   end
   it do
     expect(111_111_000.to_english).to \
@@ -54,20 +55,18 @@ describe ToEnglish do
 
   it do
     expect(111_111_111_111.to_english).to \
-      eq( 'one hundred and eleven billion, one hundred and eleven million, '\
+      eq('one hundred and eleven billion, one hundred and eleven million, '\
           'one hundred and eleven thousand, one hundred and eleven')
   end
   it do
     expect(111_111_111_111_111.to_english).to \
-      eq( 'one hundred and eleven trillion, one hundred and eleven billion, '\
+      eq('one hundred and eleven trillion, one hundred and eleven billion, '\
           'one hundred and eleven million, one hundred and eleven thousand, '\
           'one hundred and eleven')
   end
 
-
   it do
     expect(1_000_000_000_000_000.to_english).to \
-      eq( 'sorry, I can`t count. too big.')
+      eq('sorry, I can`t count. too big.')
   end
-
 end
