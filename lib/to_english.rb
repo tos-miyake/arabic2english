@@ -1,4 +1,4 @@
-require 'to_english/constant'
+require_relative 'to_english/constant'
 
 module ToEnglish
 
