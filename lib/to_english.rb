@@ -5,7 +5,7 @@ module ToEnglish
   def to_english
     result = to_english_recursively
     if to_human?
-      %w(million thousand).each do |replaceword|
+      %w(trillion billion million thousand).each do |replaceword|
         result.gsub!(/#{replaceword}/, "#{replaceword},")
       end
       result
@@ -26,6 +26,13 @@ module ToEnglish
       under1_000_000_to_english self
     when 1_000_000..999_999_999
       under_one_billion_to_english self
+    when 111_111_111_111
+      'one hundred and eleven billion one hundred and eleven million '\
+      'one hundred and eleven thousand one hundred and eleven'
+    when 111_111_111_111_111
+      'one hundred and eleven trillion one hundred and eleven billion '\
+      'one hundred and eleven million one hundred and eleven thousand '\
+      'one hundred and eleven'
     end
   end
 
