@@ -20,4 +20,15 @@ describe ToEnglish do
   it { expect(901.to_english).to eq('nine hundred and one') }
   it { expect(980.to_english).to eq('nine hundred and eighty') }
   it { expect(999.to_english).to eq('nine hundred and ninety-nine') }
+
+  it { expect(1_000.to_english).to eq('one thousand') }
+  it { expect(1_003.to_english).to eq('one thousand and three') }
+  it { expect(1_015.to_english).to eq('one thousand and fifteen') }
+  it { expect(1_040.to_english).to eq('one thousand and forty') }
+  it { expect(1_100.to_english).to eq('one thousand one hundred') }
+  it { expect(1_123.to_english).to eq('one thousand one hundred and twenty-three') }
+  it { expect(10_123.to_english).to eq('ten thousand one hundred and twenty-three') }
+  it { expect(100_123.to_english).to eq('one hundred thousand one hundred and twenty-three') }
+  it { expect(120_123.to_english).to eq('one hundred and twenty thousand one hundred and twenty-three') }
+  it { expect(113_123.to_english).to eq('one hundred and thirteen thousand one hundred and twenty-three') }
 end
