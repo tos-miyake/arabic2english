@@ -73,15 +73,15 @@ module ToEnglish
   def big_number_to_english num
     index = big_number_index(num)
     big_number_prefix = CONVERT_BIG_DIGIT[index]
-    million_english = (num / 1000**index).to_english_recursively
-    under_million_english = nil
-    unless (under_million = (num % 1000**index)).zero?
-     under_million_english =  under_million.to_english_recursively
+    big_number_english = (num / 1000**index).to_english_recursively
+    under_big_number_english = nil
+    unless (under_big_number = (num % 1000**index)).zero?
+     under_big_number_english =  under_big_number.to_english_recursively
     end
-    if under_million_english
-      "#{million_english} #{big_number_prefix} #{under_million_english}"
+    if under_big_number_english
+      "#{big_number_english} #{big_number_prefix} #{under_big_number_english}"
     else
-      "#{million_english} #{big_number_prefix}"
+      "#{big_number_english} #{big_number_prefix}"
     end
   end
 
