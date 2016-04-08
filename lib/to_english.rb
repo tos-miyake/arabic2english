@@ -6,7 +6,7 @@ module ToEnglish
     sign = self.negative? ? 'minus ' : ''
     return 'sorry, I can`t count. too big.' if 999_999_999_999_999 < self
     return 'sorry, I can`t count. too small.' if - 999_999_999_999_999 > self
-    result = to_english_recursively(self.abs)
+    result = convert_english_for(self.abs)
     result.gsub!(/^and /, "")
     if too_long?
       CONVERT_BIG_DIGIT.values.each do |replaceword|
@@ -19,7 +19,7 @@ module ToEnglish
 
   private
 
-  def to_english_recursively num
+  def convert_english_for num
     case num
     when 0..19
       "and #{CONVERT_UNDER_20[num]}"
@@ -43,11 +43,11 @@ module ToEnglish
   end
 
   def under1_000_to_english num
-    _100digit_english = to_english_recursively((num / 100))
+    _100digit_english = convert_english_for((num / 100))
     _100digit_english.gsub!(/^and /, '')
     under_100_english = nil
     unless (under100 = (num % 100)).zero?
-     under_100_english =  to_english_recursively(under100)
+     under_100_english =  convert_english_for(under100)
     end
     if under_100_english
       "#{_100digit_english} hundred #{under_100_english}"
@@ -59,11 +59,11 @@ module ToEnglish
   def big_number_to_english num
     index = big_number_index(num)
     big_number_prefix = CONVERT_BIG_DIGIT[index]
-    big_number_english = to_english_recursively(num / 1000**index)
+    big_number_english = convert_english_for(num / 1000**index)
     big_number_english.gsub!(/^and /, '')
     under_big_number_english = nil
     unless (under_big_number = (num % 1000**index)).zero?
-     under_big_number_english =  to_english_recursively(under_big_number)
+     under_big_number_english =  convert_english_for(under_big_number)
     end
     if under_big_number_english
       "#{big_number_english} #{big_number_prefix} #{under_big_number_english}"
