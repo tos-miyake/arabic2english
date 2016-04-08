@@ -8,7 +8,7 @@ module ToEnglish
     return 'sorry, I can`t count. too small.' if - 999_999_999_999_999 > self
     result = self.abs.to_english_recursively
     result.gsub!(/^and /, "")
-    if to_long?
+    if too_long?
       CONVERT_BIG_DIGIT.values.each do |replaceword|
         result.gsub!(/#{replaceword}/, "#{replaceword},")
       end
@@ -71,7 +71,7 @@ module ToEnglish
     end
   end
 
-  def to_long?
+  def too_long?
     count=0
     num = self.abs
     until num == 0
