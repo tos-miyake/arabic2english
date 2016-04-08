@@ -18,7 +18,7 @@ module ToEnglish
 
   CONVERT_BIG_DIGIT =
     {}.tap do |hash|
-      %w( million billion trillion ).each.with_index(2) do |value, key|
+      %w( thousand million billion trillion ).each.with_index(1) do |value, key|
         hash[key] = value
       end
     end.freeze
