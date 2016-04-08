@@ -6,7 +6,7 @@ module ToEnglish
     sign = self.negative? ? 'minus ' : ''
     return 'sorry, I can`t count. too big.' if 999_999_999_999_999 < self
     return 'sorry, I can`t count. too small.' if - 999_999_999_999_999 > self
-    result = self.abs.to_english_recursively
+    result = to_english_recursively(self.abs)
     result.gsub!(/^and /, "")
     if too_long?
       CONVERT_BIG_DIGIT.values.each do |replaceword|
@@ -16,24 +16,25 @@ module ToEnglish
     "#{sign}#{result}"
   end
 
-  def to_english_recursively
-    case self
-    when 0..19
-      "and #{CONVERT_UNDER_20[self]}"
-    when 20..99
-      "and #{under100_to_english}"
-    when 100..999
-      under1_000_to_english self
-    else
-      big_number_to_english self
-    end
-  end
 
   private
 
-  def under100_to_english
-    _1digit = self % 10
-    _10digit = self / 10
+  def to_english_recursively num
+    case num
+    when 0..19
+      "and #{CONVERT_UNDER_20[num]}"
+    when 20..99
+      "and #{under100_to_english(num)}"
+    when 100..999
+      under1_000_to_english num
+    else
+      big_number_to_english num
+    end
+  end
+
+  def under100_to_english num
+    _1digit = num % 10
+    _10digit = num / 10
     if _1digit.zero?
       CONVERT_10_DIGIT[_10digit]
     else
@@ -42,11 +43,11 @@ module ToEnglish
   end
 
   def under1_000_to_english num
-    _100digit_english = (num / 100).to_english_recursively
+    _100digit_english = to_english_recursively((num / 100))
     _100digit_english.gsub!(/^and /, '')
     under_100_english = nil
     unless (under100 = (num % 100)).zero?
-     under_100_english =  under100.to_english_recursively
+     under_100_english =  to_english_recursively(under100)
     end
     if under_100_english
       "#{_100digit_english} hundred #{under_100_english}"
@@ -58,11 +59,11 @@ module ToEnglish
   def big_number_to_english num
     index = big_number_index(num)
     big_number_prefix = CONVERT_BIG_DIGIT[index]
-    big_number_english = (num / 1000**index).to_english_recursively
+    big_number_english = to_english_recursively(num / 1000**index)
     big_number_english.gsub!(/^and /, '')
     under_big_number_english = nil
     unless (under_big_number = (num % 1000**index)).zero?
-     under_big_number_english =  under_big_number.to_english_recursively
+     under_big_number_english =  to_english_recursively(under_big_number)
     end
     if under_big_number_english
       "#{big_number_english} #{big_number_prefix} #{under_big_number_english}"
