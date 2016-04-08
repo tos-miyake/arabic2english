@@ -1,12 +1,11 @@
 require_relative 'to_english/constant'
 
 module ToEnglish
-
   def to_english
-    sign = self.negative? ? 'minus ' : ''
+    sign = negative? ? 'minus ' : ''
     return 'sorry, I can`t count. too big.' if 999_999_999_999_999 < self
     return 'sorry, I can`t count. too small.' if - 999_999_999_999_999 > self
-    result = convert_english_for(self.abs).gsub(/^and /, "")
+    result = convert_english_for(abs).gsub(/^and /, '')
     if too_long?
       CONVERT_BIG_DIGIT.values.each do |replaceword|
         result.gsub!(/#{replaceword}/, "#{replaceword},")
@@ -15,10 +14,9 @@ module ToEnglish
     "#{sign}#{result}"
   end
 
-
   private
 
-  def convert_english_for num
+  def convert_english_for(num)
     case num
     when 0..19
       "and #{CONVERT_UNDER_20[num]}"
@@ -31,7 +29,7 @@ module ToEnglish
     end
   end
 
-  def under100_to_english num
+  def under100_to_english(num)
     _1digit = num % 10
     _10digit = num / 10
     if _1digit.zero?
@@ -41,12 +39,12 @@ module ToEnglish
     end
   end
 
-  def under1_000_to_english num
+  def under1_000_to_english(num)
     _100digit_english = convert_english_for(num / 100)
-                          .gsub(/^and /, '')
+                        .gsub(/^and /, '')
     under_100_english = nil
     unless (under100 = (num % 100)).zero?
-     under_100_english =  convert_english_for(under100)
+      under_100_english = convert_english_for(under100)
     end
     if under_100_english
       "#{_100digit_english} hundred #{under_100_english}"
@@ -55,14 +53,14 @@ module ToEnglish
     end
   end
 
-  def big_number_to_english num
+  def big_number_to_english(num)
     index = big_number_index(num)
     big_number_prefix = CONVERT_BIG_DIGIT[index]
     big_number_english = convert_english_for(num / 1000**index)
-                           .gsub(/^and /, '')
+                         .gsub(/^and /, '')
     under_big_number_english = nil
     unless (under_big_number = (num % 1000**index)).zero?
-     under_big_number_english =  convert_english_for(under_big_number)
+      under_big_number_english = convert_english_for(under_big_number)
     end
     if under_big_number_english
       "#{big_number_english} #{big_number_prefix} #{under_big_number_english}"
@@ -72,24 +70,21 @@ module ToEnglish
   end
 
   def too_long?
-    count=0
-    num = self.abs
+    count = 0
+    num = abs
     until num == 0
-      count+=1 unless (num % 1000).zero?
+      count += 1 unless (num % 1000).zero?
       num /= 1000
     end
     count > 2
   end
 
-  def big_number_index big_num
-    index=0
+  def big_number_index(big_num)
+    index = 0
     num = big_num
-    until num == 0
-      index+=1 unless (num /= 1000).zero?
-    end
+    index += 1 unless (num /= 1000).zero? until num == 0
     index
   end
-
 end
 
 class Integer
