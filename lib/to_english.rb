@@ -6,8 +6,7 @@ module ToEnglish
     sign = self.negative? ? 'minus ' : ''
     return 'sorry, I can`t count. too big.' if 999_999_999_999_999 < self
     return 'sorry, I can`t count. too small.' if - 999_999_999_999_999 > self
-    result = convert_english_for(self.abs)
-    result.gsub!(/^and /, "")
+    result = convert_english_for(self.abs).gsub(/^and /, "")
     if too_long?
       CONVERT_BIG_DIGIT.values.each do |replaceword|
         result.gsub!(/#{replaceword}/, "#{replaceword},")
@@ -43,8 +42,8 @@ module ToEnglish
   end
 
   def under1_000_to_english num
-    _100digit_english = convert_english_for((num / 100))
-    _100digit_english.gsub!(/^and /, '')
+    _100digit_english = convert_english_for(num / 100)
+                          .gsub(/^and /, '')
     under_100_english = nil
     unless (under100 = (num % 100)).zero?
      under_100_english =  convert_english_for(under100)
@@ -60,7 +59,7 @@ module ToEnglish
     index = big_number_index(num)
     big_number_prefix = CONVERT_BIG_DIGIT[index]
     big_number_english = convert_english_for(num / 1000**index)
-    big_number_english.gsub!(/^and /, '')
+                           .gsub(/^and /, '')
     under_big_number_english = nil
     unless (under_big_number = (num % 1000**index)).zero?
      under_big_number_english =  convert_english_for(under_big_number)
